@@ -43,6 +43,7 @@ Pub.ready = function(isPub){
     var Pg = new PgPool({
         user: GLOBAL.PG_USER,
         password: GLOBAL.PG_PASSWORD,
+		host: GLOBAL.PG_HOST,
         port: GLOBAL.PG_PORT,
         database: GLOBAL.PG_DATABASE
     });
