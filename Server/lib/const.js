@@ -182,6 +182,14 @@ exports.RULE = {
 		ai: false,
 		big: true,
 		ewq: false
+	},
+	'LZHSH': { lang: "lzh",
+		rule: "Classic",
+		opts: [ "man", "ext", "mis", "loa", "str" ],
+		time: 1,
+		ai: true,
+		big: false,
+		ewq: true
 	}
 };
 exports.getPreScore = function(text, chain, tr){
@@ -193,7 +201,8 @@ exports.getPenalty = function(chain, score){
 exports.GAME_TYPE = Object.keys(exports.RULE);
 exports.EXAMPLE_TITLE = {
 	'ko': "가나다라마바사아자차",
-	'en': "abcdefghij"
+	'en': "abcdefghij",
+	'lzh': "日月火水木金土"
 };
 exports.INIT_SOUNDS = [ "ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ", "ㅂ", "ㅃ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅉ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ" ];
 exports.MISSION_ko = [ "가", "나", "다", "라", "마", "바", "사", "아", "자", "차", "카", "타", "파", "하" ];
@@ -238,6 +247,7 @@ exports.KOR_GROUP = new RegExp("(,|^)(" + [
 	"INJEONG"
 ].join('|') + ")(,|$)");
 exports.ENG_ID = /^[a-z]+$/i;
+exports.LZH_ID = /^[\u4E00-\u62FF\u6300-\u77FF\u7800-\u8CFF\u8D00-\u9FFF]+$/i;
 exports.KOR_FLAG = {
 	LOANWORD: 1, // 외래어
 	INJEONG: 2,	// 어인정

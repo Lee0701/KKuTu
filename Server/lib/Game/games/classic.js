@@ -67,6 +67,9 @@ exports.getTitle = function(){
 			ja = 44032 + 588 * Math.floor(Math.random() * 18);
 			eng = "[\\u" + ja.toString(16) + "-\\u" + (ja + 587).toString(16) + "]$";
 			break;
+		case 'LZHSH':
+			eng = "[\\u4E00-\\u62FF\\u6300-\\u77FF\\u7800-\\u8CFF\\u8D00-\\u9FFF]";
+			break;
 	}
 	function tryTitle(h){
 		if(h > 50){
@@ -76,7 +79,7 @@ exports.getTitle = function(){
 		DB.kkutu[l.lang].find(
 			[ '_id', new RegExp(eng + ".{" + Math.max(1, my.round - 1) + "}$") ],
 			// [ 'hit', { '$lte': h } ],
-			(l.lang == "ko") ? [ 'type', Const.KOR_GROUP ] : [ '_id', Const.ENG_ID ]
+			(l.lang == "ko") ? [ 'type', Const.KOR_GROUP ] : (l.lang == "lzh") ? [ '_id', Const.LZH_ID ] : [ '_id', Const.ENG_ID ]
 			// '$where', eng+"this._id.length == " + Math.max(2, my.round) + " && this.hit <= " + h
 		).limit(20).on(function($md){
 			var list;
@@ -111,7 +114,9 @@ exports.getTitle = function(){
 			for(i=0; i<len; i++) list.push(getAuto.call(my, title[i], getSubChar.call(my, title[i]), 1));
 			
 			Lizard.all(list).then(function(res){
+				console.log('TODO', res);
 				for(i in res) if(!res[i]) return R.go(EXAMPLE);
+				console.log('PASS', title);
 				
 				return R.go(title);
 			});
@@ -306,7 +311,7 @@ exports.submit = function(client, text){
 		}
 	}
 	DB.kkutu[l].findOne([ '_id', text ],
-		(l == "ko") ? [ 'type', Const.KOR_GROUP ] : [ '_id', Const.ENG_ID ]
+		(l == "ko") ? [ 'type', Const.KOR_GROUP ] : (l == "lzh") ? [ '_id', Const.LZH_ID ] : [ '_id', Const.ENG_ID ]
 	).on(onDB);
 };
 exports.getScore = function(text, delay, ignoreMission){
@@ -441,6 +446,8 @@ function getAuto(char, subc, type){
 		case 'KAP':
 			adv = `.(${adc})$`;
 			break;
+		case 'LZHSH':
+			adv = `^(${adc}).`;
 	}
 	if(!char){
 		console.log(`Undefined char detected! key=${key} type=${type} adc=${adc}`);
@@ -463,6 +470,8 @@ function getAuto(char, subc, type){
 			if(my.opts.loanword) aqs.push([ 'flag', { '$nand': Const.KOR_FLAG.LOANWORD } ]);
 			if(my.opts.strict) aqs.push([ 'type', Const.KOR_STRICT ], [ 'flag', { $lte: 3 } ]);
 			else aqs.push([ 'type', Const.KOR_GROUP ]);
+		} else if(my.rule.lang == "lzh") {
+			aqs.push([ '_id', Const.LZH_ID ]);
 		}else{
 			aqs.push([ '_id', Const.ENG_ID ]);
 		}
@@ -526,6 +535,7 @@ function getChar(text){
 		case 'KKT':
 		case 'KSH': return text.slice(-1);
 		case 'KAP': return text.charAt(0);
+		case 'LZHSH': return text.slice(-1);
 	}
 };
 function getSubChar(char){
