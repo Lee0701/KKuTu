@@ -59,8 +59,8 @@ function page(req, res, file, data){
 	var sid = req.session.id || "";
 	
 	data.published = global.isPublic;
-	data.lang = req.query.locale || "ko_KR";
-	if(!Language[data.lang]) data.lang = "ko_KR";
+	data.lang = req.query.locale || "lzh";
+	if(!Language[data.lang]) data.lang = "lzh";
 	// URL ...?locale=en_US will show the page in English
 	
 	// if(exports.STATIC) data.static = exports.STATIC[data.lang];
