@@ -1440,6 +1440,9 @@ function getRewards(mode, score, bonus, rank, all, ss){
 		case 'ESS':
 			rw.score += score * 0.22;
 			break;
+		case "LZHSH":
+			rw.score += score * 0.55;
+			break;
 		default:
 			break;
 	}

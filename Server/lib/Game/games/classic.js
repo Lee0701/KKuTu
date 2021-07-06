@@ -18,6 +18,7 @@
 
 var Const = require('../../const');
 var Lizard = require('../../sub/lizard');
+var variantDict = require('../../lzh/variant_dict')
 var DB;
 var DIC;
 
@@ -103,10 +104,10 @@ exports.getTitle = function(){
 		var i, list = [];
 		var len;
 		
-		/* ºÎÇÏ°¡ ³Ê¹« °É¸°´Ù¸é ÁÖ¼®À» Ç®ÀÚ.
-		R.go(true);
-		return R;
-		*/
+         /* ë¶€í•˜ê°€ ë„ˆë¬´ ê±¸ë¦°ë‹¤ë©´ ì£¼ì„ì„ í’€ìž.
+         R.go(true);
+         return R;
+         */
 		if(title == null){
 			R.go(EXAMPLE);
 		}else{
@@ -221,11 +222,13 @@ exports.submit = function(client, text){
 	if(!mgt) return;
 	if(!mgt.robot) if(mgt != client.id) return;
 	if(!my.game.char) return;
+
+	l = my.rule.lang;
+	if(l == 'lzh') text = text.normalize('NFC');
 	
 	if(!isChainable(text, my.mode, my.game.char, my.game.subChar)) return client.chat(text);
 	if(my.game.chain.indexOf(text) != -1) return client.publish('turnError', { code: 409, value: text }, true);
 	
-	l = my.rule.lang;
 	my.game.loading = true;
 	function onDB($doc){
 		if(!my.game.chain) return;
@@ -298,15 +301,19 @@ exports.submit = function(client, text){
 		var type = Const.GAME_TYPE[my.mode];
 		var char = my.game.char, subChar = my.game.subChar;
 		var l = char.length;
+		var matches = (a, b) => {
+			if(my.rule.lang == 'lzh') return variantDict.match(a, b);
+			else return a == b;
+		};
 		
 		if(!text) return false;
 		if(text.length <= l) return false;
 		if(my.game.wordLength && text.length != my.game.wordLength) return false;
 		if(type == "KAP") return (text.slice(-1) == char) || (text.slice(-1) == subChar);
 		switch(l){
-			case 1: return (text[0] == char) || (text[0] == subChar);
-			case 2: return (text.substr(0, 2) == char);
-			case 3: return (text.substr(0, 3) == char) || (text.substr(0, 2) == char.slice(1));
+			case 1: return matches(text[0], char) || matches(text[0], subChar);
+			case 2: return matches(text.substr(0, 2), char);
+			case 3: return matches(text.substr(0, 3), char) || matches(text.substr(0, 2), char.slice(1));
 			default: return false;
 		}
 	}
@@ -417,9 +424,9 @@ function getMission(l){
 }
 function getAuto(char, subc, type){
 	/* type
-		0 ¹«ÀÛÀ§ ´Ü¾î ÇÏ³ª
-		1 Á¸Àç ¿©ºÎ
-		2 ´Ü¾î ¸ñ·Ï
+		0 ë¬´ìž‘ìœ„ ë‹¨ì–´ í•˜ë‚˜
+		1 ì¡´ìž¬ ì—¬ë¶€
+		2 ë‹¨ì–´ ëª©ë¡
 	*/
 	var my = this;
 	var R = new Lizard.Tail();
@@ -452,7 +459,7 @@ function getAuto(char, subc, type){
 	if(!char){
 		console.log(`Undefined char detected! key=${key} type=${type} adc=${adc}`);
 	}
-	MAN.findOne([ '_id', char || "¡Ú" ]).on(function($mn){
+	MAN.findOne([ '_id', char || "ï¿½ï¿½" ]).on(function($mn){
 		if($mn && bool){
 			if($mn[key] === null) produce();
 			else R.go($mn[key]);
@@ -555,12 +562,12 @@ function getSubChar(char){
 			ca = [ Math.floor(k/28/21), Math.floor(k/28)%21, k%28 ];
 			cb = [ ca[0] + 0x1100, ca[1] + 0x1161, ca[2] + 0x11A7 ];
 			cc = false;
-			if(cb[0] == 4357){ // ¤©¿¡¼­ ¤¤, ¤·
+			if(cb[0] == 4357){ // ã„¹ì—ì„œ ã„´, ã…‡
 				cc = true;
 				if(RIEUL_TO_NIEUN.includes(cb[1])) cb[0] = 4354;
 				else if(RIEUL_TO_IEUNG.includes(cb[1])) cb[0] = 4363;
 				else cc = false;
-			}else if(cb[0] == 4354){ // ¤¤¿¡¼­ ¤·
+			}else if(cb[0] == 4354){ // ã„´ì—ì„œ ã…‡
 				if(NIEUN_TO_IEUNG.indexOf(cb[1]) != -1){
 					cb[0] = 4363;
 					cc = true;
