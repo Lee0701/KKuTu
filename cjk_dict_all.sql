@@ -76631,3 +76631,6 @@ COPY kkutu_lzh (_id, type, mean, hit, flag, theme) FROM stdin;
 瘦長	0	''	0	0	0
 植字機	0	''	0	0	0
 \.
+
+ALTER TABLE ONLY kkutu_lzh
+    ADD CONSTRAINT kkutu_lzh_key PRIMARY KEY (_id);
