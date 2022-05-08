@@ -7,7 +7,7 @@ COPY ./Server/package*.json ./Server/
 COPY ./Server/lib/package*.json ./Server/lib/
 COPY ./Server/lib/ ./Server/lib/
 
-RUN cd Server && node setup
+RUN cd Server && npm install && node setup
 
 RUN cd Server/lib && npx grunt default pack
 
