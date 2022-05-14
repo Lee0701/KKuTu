@@ -3,8 +3,9 @@ const path = require('path')
 const {buildDict} = require('./char_dict')
 const cn = buildDict(path.join(__dirname, 'cn.txt'))
 const jp = buildDict(path.join(__dirname, 'jp.txt'))
+const integrated = buildDict(path.join(__dirname, 'integrated.txt'))
 
-const getVariants = (text) => text.split('').map((c) => [...(cn[c] || []), ...(jp[c] || []), c])
+const getVariants = (text) => text.split('').map((c) => [...(integrated[c] || []), c])
 
 const match = (a, b) => {
     if(!a || !b) return a == b
