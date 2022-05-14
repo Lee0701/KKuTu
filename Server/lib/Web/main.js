@@ -158,7 +158,7 @@ Const.MAIN_PORTS.forEach(function(v, i){
 	if(Const.IS_SECURED) {
 		protocol = 'wss';
 	} else {
-		protocol = 'wss';
+		protocol = 'ws';
 	}
 	gameServers[i] = new GameClient(KEY, `${protocol}://${GLOBAL.GAME_SERVER_HOST}:${v}/${KEY}`);
 });
@@ -235,7 +235,7 @@ Server.get("/", function(req, res){
 			'_id': id,
 			'PORT': Const.MAIN_PORTS[server],
 			'HOST': req.hostname,
-			'PROTOCOL': Const.IS_SECURED ? 'wss' : 'wss',
+			'PROTOCOL': Const.IS_SECURED ? 'wss' : 'ws',
 			'TEST': req.query.test,
 			'MOREMI_PART': Const.MOREMI_PART,
 			'AVAIL_EQUIP': Const.AVAIL_EQUIP,
