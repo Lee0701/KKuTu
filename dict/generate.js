@@ -38,6 +38,7 @@ let mozc = new Array(10).fill().map((_, i) => i.toString(10).padStart(2, '0')).m
 mozc = mozc.flatMap((file) => generateMozc(file))
 
 let result = [...cedictTrad, ...cedictSimp, ...hanja, ...mozc]
+result = [...new Set(result)]
 result = result.map((line) => `${line}\t0\t''\t0\t0\t0`)
 comments = comments.map((line) => `-- ${line}`)
 fs.writeFileSync('result.txt', [...comments, ...head, ...result].join('\n'))
