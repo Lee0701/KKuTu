@@ -19,6 +19,12 @@ cedict = cedict.filter(([trad, simp]) => filterWord(trad) && filterWord(simp))
 let cedictTrad = cedict.map(([trad, simp]) => trad)
 let cedictSimp = cedict.map(([trad, simp]) => simp)
 
+let essay = fs.readFileSync('essay.txt').toString().split('\n')
+essay = essay.filter((line) => line.trim())
+essay = essay.map((line) => line.split('\t'))
+essay = essay.filter((line) => line.length >= 2).map((line) => line[0])
+essay = essay.filter((line) => line.trim())
+
 let hanja = fs.readFileSync('hanja.txt').toString().split('\n')
 hanja.filter((line) => line.startsWith('#')).forEach((line) => comments.push(line))
 hanja = hanja.filter((line) => !line.startsWith('#') && line.trim())
@@ -37,7 +43,7 @@ const generateMozc = (file) => {
 let mozc = new Array(10).fill().map((_, i) => i.toString(10).padStart(2, '0')).map((n) => `dictionary${n}.txt`)
 mozc = mozc.flatMap((file) => generateMozc(file))
 
-let result = [...cedictTrad, ...cedictSimp, ...hanja, ...mozc]
+let result = [...cedictTrad, ...cedictSimp, ...essay, ...hanja, ...mozc]
 result = [...new Set(result)]
 result = result.map((line) => `${line}\t0\t''\t0\t0\t0`)
 comments = comments.map((line) => `-- ${line}`)

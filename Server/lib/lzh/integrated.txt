@@ -11000,10 +11000,6 @@
 颉	颉
 頡	颉
 頡	頡
-	undefined
-	
-undefined	
-undefined	undefined
 乗	乘
 乗	乗
 乘	乗

@@ -5,8 +5,6 @@ const cn = buildDict(path.join(__dirname, 'cn.txt'))
 const jp = buildDict(path.join(__dirname, 'jp.txt'))
 const integrated = buildDict(path.join(__dirname, 'integrated.txt'))
 
-console.log(integrated)
-
 const getVariants = (text) => text.split('').map((c) => [...(integrated[c] || []), c])
 
 const match = (a, b) => {
