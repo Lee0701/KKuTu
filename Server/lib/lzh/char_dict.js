@@ -5,4 +5,6 @@ const buildDict = (file) => fs.readFileSync(file)
         .filter((line) => !line.startsWith('#') && line.trim() != '')
         .map((line) => line.split('\t').map((item) => item.trim()))
         .reduce((acc, [key, value]) => (acc[key] = [...(acc[key] || []), value], acc), {})
-        module.exports = {buildDict}
+
+module.exports = {buildDict}
+        
