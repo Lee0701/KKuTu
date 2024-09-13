@@ -1,22 +1,19 @@
-version: "3"
-
 services:
   game:
     build: .
-    volumes:
-      - ./Server/lib:/app/Server/lib/
     depends_on:
       - db
+    volumes:
+      - ./config/global.json:/app/Server/lib/sub/global.json
+      - ./config/auth.json:/app/Server/lib/sub/auth.json
     command: [ "node", "/app/Server/lib/Game/cluster.js", "0", "1" ]
     restart: always
-    ports:
-      - 8496:8496
-      - 8080:8080
   web:
     build: .
     volumes:
-      - ./Server/lib:/app/Server/lib/
-      - kkutu_data:/kkutu
+      - ./kkutu_data:/kkutu
+      - ./config/global.json:/app/Server/lib/sub/global.json
+      - ./config/auth.json:/app/Server/lib/sub/auth.json
     command: [ "node", "/app/Server/lib/Web/cluster.js", "1" ]
     restart: always
     depends_on:
@@ -33,10 +30,4 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: main
     volumes:
-      - db_data:/var/lib/postgresql/data
-    ports:
-      - 5432:5432
-
-volumes:
-  kkutu_data:
-  db_data:
+      - ./db_data:/var/lib/postgresql/data

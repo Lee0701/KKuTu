@@ -1,5 +1,6 @@
 .DS_Store
 node_modules
+config/
 kkutu_data/
 db_data/
 Client/node_modules
