@@ -21,7 +21,6 @@ var JLog	 = require("./jjlog");
 var Language = {
 	'ko_KR': require("../Web/lang/ko_KR.json"),
 	'en_US': require("../Web/lang/en_US.json"),
-	'lzh': require("../Web/lang/lzh.json")
 };
 
 function updateLanguage(){
@@ -58,8 +57,8 @@ function page(req, res, file, data){
 	var sid = req.session.id || "";
 	
 	data.published = global.isPublic;
-	data.lang = req.query.locale || "lzh";
-	if(!Language[data.lang]) data.lang = "lzh";
+	data.lang = req.query.locale || "en_US";
+	if(!Language[data.lang]) data.lang = "en_US";
 	// URL ...?locale=en_US will show the page in English
 	
 	// if(exports.STATIC) data.static = exports.STATIC[data.lang];

@@ -45,7 +45,6 @@ var fs		 = require('fs');
 var Language = {
 	'ko_KR': require("./lang/ko_KR.json"),
 	'en_US': require("./lang/en_US.json"),
-	'lzh': require("./lang/lzh.json")
 };
 //볕뉘 수정
 var ROUTES = [
