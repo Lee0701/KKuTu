@@ -7,7 +7,6 @@
 	"PG_HOST": "localhost",
 	"PG_USER": "postgres",
 	"PG_PASSWORD": "Your PostgreSQL Password Here",
-	"PG_HOST": "127.0.0.1",
 	"PG_PORT": 5432,
 	"PG_DATABASE": "main",
 	"GOOGLE_RECAPTCHA_TO_GUEST": false,
