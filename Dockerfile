@@ -8,7 +8,9 @@ COPY ./Server/lib/package*.json ./Server/lib/
 COPY ./Server/lib/ ./Server/lib/
 
 RUN cd Server && npm install && node setup
-
 RUN cd Server/lib && npx grunt default pack
 
-WORKDIR /kkutu
+RUN npm install pm2 -g
+COPY ./kkutu.json ./
+
+CMD ["pm2-runtime", "start", "kkutu.json"]

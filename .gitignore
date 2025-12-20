@@ -1,6 +1,7 @@
 .DS_Store
 node_modules
-config/
+global.json
+auth.json
 kkutu_data/
 db_data/
 Client/node_modules
