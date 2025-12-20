@@ -23,3 +23,8 @@ services:
     volumes:
       - ./db_data:/var/lib/postgresql/data
     restart: always
+  redis:
+    image: redis:8.4.0-alpine
+    volumes:
+      - ./redis_data:/data
+    restart: always

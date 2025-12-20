@@ -4,6 +4,7 @@ global.json
 auth.json
 kkutu_data/
 db_data/
+redis_data/
 Client/node_modules
 Server/node_modules
 Server/run.bat
