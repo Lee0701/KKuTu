@@ -9,6 +9,8 @@
 	"PG_PASSWORD": "Your PostgreSQL Password Here",
 	"PG_PORT": 5432,
 	"PG_DATABASE": "main",
+	"REDIS_HOST": "localhost",
+	"REDIS_PORT": 6379,
 	"GOOGLE_RECAPTCHA_TO_GUEST": false,
 	"GOOGLE_RECAPTCHA_TO_USER": false,
 	"GOOGLE_RECAPTCHA_SITE_KEY": "Your Google Recaptcha site key Here",

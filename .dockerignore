@@ -1,2 +1,5 @@
 /docker-compose.yml
 /Dockerfile
+/kkutu_data
+/db_data
+/redis_data

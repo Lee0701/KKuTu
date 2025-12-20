@@ -66,12 +66,15 @@ Server.set('view engine', "pug");
 Server.use(Express.static(__dirname + "/public"));
 Server.use(Parser.urlencoded({ extended: true }));
 Server.use(Exession({
-	/* use only for redis-installed
+	/* use only for redis-installed*/
 
 	store: new Redission({
-		client: Redis.createClient(),
+		client: Redis.createClient({
+			host: GLOBAL.REDIS_HOST,
+			port: GLOBAL.REDIS_PORT
+		}),
 		ttl: 3600 * 12
-	}),*/
+	}),
 	secret: 'kkutu',
 	resave: false,
 	saveUninitialized: true
