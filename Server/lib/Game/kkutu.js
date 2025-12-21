@@ -1443,6 +1443,9 @@ function getRewards(mode, score, bonus, rank, all, ss){
 		case "LZHSH":
 			rw.score += score * 0.55;
 			break;
+		case "KORESH":
+			rw.score += score * 0.55;
+			break;
 		default:
 			break;
 	}
